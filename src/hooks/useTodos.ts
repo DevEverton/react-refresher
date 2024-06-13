@@ -4,7 +4,9 @@ import { Todo } from "../types/todo";
 
 export default function useTodos() {
   const [todos, setTodos] = useState(() => {
-    const savedTodos = JSON.parse(localStorage.getItem("todos") || "[]");
+    const savedTodos: Todo[] = JSON.parse(
+      localStorage.getItem("todos") || "[]"
+    );
     return savedTodos.length > 0 ? savedTodos : dummyData;
   });
 
@@ -43,11 +45,20 @@ export default function useTodos() {
     );
   }
 
+  function editTodo(id: number, newTitle: string) {
+    setTodos((prevTodos: Todo[]) =>
+      prevTodos.map((todo: Todo) =>
+        todo.id === id ? { ...todo, title: newTitle } : todo
+      )
+    );
+  }
+
   return {
     todos,
     setTodoCompleted,
     addTodo,
     deleteTodo,
     deleteAllCompleted,
+    editTodo,
   };
 }

@@ -5,12 +5,14 @@ interface TodoListProps {
   todos: Todo[];
   onCompletedChange: (id: number, completed: boolean) => void;
   onDelete: (id: number) => void;
+  onEdit: (todo: Todo) => void;
 }
 
 export default function TodoList({
   todos,
   onCompletedChange,
   onDelete,
+  onEdit,
 }: TodoListProps) {
   const todosSorted = todos.sort((a: Todo, b: Todo) =>
     a.completed === b.completed ? 0 : a.completed ? 1 : -1
@@ -25,6 +27,7 @@ export default function TodoList({
             todo={todo}
             onCompletedChange={onCompletedChange}
             onDelete={onDelete}
+            onEdit={(todo: Todo) => onEdit(todo)}
           />
         ))}
       </div>
